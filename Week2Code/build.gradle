@@ -6,9 +6,6 @@ plugins {
     id 'info.solidsoft.pitest' version '1.15.0'
 }
 
-group 'vector'
-version '1.0-SNAPSHOT'
-
 repositories {
     mavenCentral()
 }
@@ -31,7 +28,7 @@ jacocoTestReport {
     reports {
         html.required = true
         xml.required = false
-        csv.required = false
+        csv.required = true
     }
 }
 
@@ -61,7 +58,7 @@ tasks.withType(Checkstyle) {
 
 // PIT Mutation Testing Configuration
 pitest {
-    targetClasses = ['vector.*'] // Adjust to match your package structure
+    targetClasses = ['shapes.*'] // Adjust to match your package structure
     targetTests = ['*'] // Adjust to match your test package structure
     pitestVersion = '1.15.8'
     threads = 4
