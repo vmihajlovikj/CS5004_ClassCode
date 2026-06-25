@@ -1,8 +1,8 @@
-package controller;
+package controller.commands;
 
-import model.Calculator;
+import controller.InputResult;
 
-public class InputPair implements Pair<InputResult, Double>{
+public class InputPair implements Pair<InputResult, Double> {
   private final InputResult a;
   private final Double b;
 
