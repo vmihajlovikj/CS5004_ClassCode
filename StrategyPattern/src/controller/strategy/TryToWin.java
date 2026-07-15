@@ -1,10 +1,10 @@
-package controller;
+package controller.strategy;
 
 import java.awt.geom.Point2D;
 import model.Piece;
 import model.TicTacToeModel;
 
-public class TryToBlock implements TTTStrategy{
+public class TryToWin implements TTTStrategy{
   @Override
   public Point2D getPosition(TicTacToeModel model) {
     if (model == null ){

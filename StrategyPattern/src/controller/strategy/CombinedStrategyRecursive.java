@@ -5,24 +5,25 @@ import java.util.ArrayList;
 import java.util.List;
 import model.TicTacToeModel;
 
-public class CombinedStrategy implements TTTStrategy{
-  private final List<TTTStrategy> strategies;
+public class CombinedStrategyRecursive implements TTTStrategy{
+  private final TTTStrategy firstStrategy;
+  private final TTTStrategy secondStrategy;
 
-  public CombinedStrategy( TTTStrategy... strategies) {
-    this.strategies = new ArrayList<>();
-    for ( TTTStrategy strategy : strategies) {
-      this.strategies.add(strategy);
-    }
+  public CombinedStrategyRecursive(TTTStrategy firstStrategy, TTTStrategy secondStrategy) {
+      if ( firstStrategy == null || secondStrategy == null ) {
+        throw new IllegalArgumentException("firstStrategy or secondStrategy is null");
+      }
+
+      this.firstStrategy = firstStrategy;
+      this.secondStrategy = secondStrategy;
   }
 
   @Override
   public Point2D getPosition(TicTacToeModel model) {
-    for ( TTTStrategy strategy : strategies ) {
-      Point2D position = strategy.getPosition(model);
-      if (position != null) {
-        return position;
-      }
-    }
-    return null;
+     Point2D position = this.firstStrategy.getPosition(model);
+     if ( position == null ) {
+       return this.secondStrategy.getPosition(model);
+     }
+     return null;
   }
 }

@@ -38,8 +38,8 @@ public class ControllerImpl implements Controller {
     this.input = input;
     this.scanner = new Scanner(input); //0x100
     this.commands = new HashMap<>();
-    this.commands.put("move", ()->new MoveCommand(this.model, this.scanner));
-    this.commands.put("turn", ()->new Turn(this.model, this.view, this.scanner));
+    this.commands.put("move", ()->{ return new MoveCommand(this.model, this.scanner); });
+    this.commands.put("turn", ()->{ return new Turn(this.model, this.view, this.scanner); });
     this.commands.put("save", ()->new Save(this.model, this.view));
     this.commands.put("retrieve", ()->new Retrieve(this.model, this.view));
     this.commands.put("display", ()->new Display(this.model, this.view));

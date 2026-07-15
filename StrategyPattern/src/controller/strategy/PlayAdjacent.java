@@ -1,4 +1,4 @@
-package controller;
+package controller.strategy;
 
 import java.awt.geom.Point2D;
 import model.Piece;

@@ -1,22 +1,33 @@
 package controller.commands;
 
+import java.awt.geom.Line2D;
+import java.io.IOException;
+import java.util.List;
 import java.util.Scanner;
 import model.TracingTurtleGraphics;
-import model.TurtleGraphics;
 
-public class TraceCommand implements Command {
+public class GetLinesCommand implements Command {
   private final TracingTurtleGraphics model;
   private final Scanner scanner;
-  public TraceCommand(TracingTurtleGraphics model, Scanner scanner) {
-    if ( model == null || scanner == null ) {
+  private final Appendable view;
+  public GetLinesCommand(TracingTurtleGraphics model, Scanner scanner, Appendable view) {
+
+    if ( model == null || scanner == null || view == null ) {
       throw new IllegalArgumentException("Model or View or Scanner is null");
     }
     this.model = model;
     this.scanner = scanner;
+    this.view = view;
   }
   @Override
   public void run() {
-    double distance = scanner.nextDouble();//make sure there is something to read and its a double
-    this.model.trace(distance);
+    List<Line2D> lines = this.model.getLines();
+    try{
+      for(Line2D line : lines){
+        view.append( line.getP1() + " " + line.getP2() + "\n");
+      }
+    }catch(IOException e){
+      throw new IllegalStateException(e);
+    }
   }
 }
