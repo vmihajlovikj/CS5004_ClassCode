@@ -34,7 +34,7 @@ public class ReadonlyTicTacToeModel implements TicTacToeModel {
 
   @Override
   public void setPieceAt(int r, int c, Piece p) {
-    throw new RuntimeException("How dare you?");
+    throw new RuntimeException("This is a readonly model.");
   }
 
   @Override

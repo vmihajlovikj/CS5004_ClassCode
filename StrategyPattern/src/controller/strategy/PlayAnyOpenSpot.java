@@ -7,6 +7,7 @@ import model.TicTacToeModel;
 public class PlayAnyOpenSpot implements TTTStrategy{
   @Override
   public Point2D getPosition(TicTacToeModel model) {
+    //this should not be allowed.
     if (model == null ){
       throw new IllegalArgumentException("model is null");
     }

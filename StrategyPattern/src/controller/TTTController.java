@@ -2,6 +2,7 @@ package controller;
 
 import controller.strategy.CombinedStrategy;
 import controller.strategy.CombinedStrategyRecursive;
+import controller.strategy.HumanStrategy;
 import controller.strategy.PlayAnyOpenSpot;
 import controller.strategy.PlayCenter;
 import controller.strategy.TTTStrategy;
@@ -27,34 +28,21 @@ import model.TicTacToeModel;
  */
 public class TTTController implements TicTacToeController {
   private final TicTacToeModel model;
-  private final Readable input;
   private final Appendable output;
-  private Piece currentPlayer;
-  private final Map<Difficulty, Supplier<TTTStrategy>> strategies;
-
-  public TTTController(TicTacToeModel model, Appendable output, Readable input) {
+  private final Readable readable;
+  private final Scanner scanner;
+  public TTTController(TicTacToeModel model, Appendable output, Readable readable) {
     this.model = Objects.requireNonNull(model);
     this.output = Objects.requireNonNull(output);
-    this.input = Objects.requireNonNull(input);
-    this.currentPlayer = Piece.X;
-    this.strategies = new HashMap<>();
-    this.strategies.put(Difficulty.EASY, ()->new PlayAnyOpenSpot());
-    this.strategies.put(Difficulty.MEDIUM, ()->new CombinedStrategy(new PlayCenter(), new PlayAnyOpenSpot()));
-    this.strategies.put(Difficulty.HARD, ()->new CombinedStrategyRecursive(new TryToBlock(), new CombinedStrategyRecursive(new PlayCenter(), new PlayAnyOpenSpot())));
-
+    this.readable = Objects.requireNonNull(readable);
+    this.scanner = new Scanner(readable);
   }
 
-  private void advancePlayer(){
-    if ( currentPlayer == Piece.X ) {
-      currentPlayer = Piece.O;
-    }else if ( currentPlayer == Piece.O ) {
-      currentPlayer = Piece.X;
-    }else{
-      throw new IllegalStateException("Unknown player");
-    }
+  public Scanner getScanner() {
+    return scanner;
   }
 
- private void write(String message){
+  private void write(String message){
     try{
       this.output.append(message);
     }catch(IOException e){
@@ -62,10 +50,8 @@ public class TTTController implements TicTacToeController {
     }
  }
 
-
   @Override
   public void play(Player player1, Player player2) {
-    Scanner scanner = new Scanner(this.input);
     List<Player> players = new ArrayList<>();
     players.add(player1);
     players.add(player2);
@@ -76,7 +62,7 @@ public class TTTController implements TicTacToeController {
       while( true ) {
         Player player = players.get(currentPlayerIndex); // currentPlayerIndex = 0;
         write("Player " + player + " enter position: ");
-        Point2D position = player.getPosition(model);
+        Point2D position = player.getPosition( new ReadonlyTicTacToeModel(model));
         if ( position == null ) {
           throw new IllegalStateException("Could not find position for " + player + ", exiting.");
         }
