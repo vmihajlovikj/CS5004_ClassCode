@@ -28,4 +28,9 @@ public class PixelImpl implements Pixel {
   public int getBlue() {
     return this.blue;
   }
+
+  @Override
+  public String toString() {
+    return String.format("%d %d %d", red, green, blue);
+  }
 }

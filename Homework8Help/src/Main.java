@@ -1,15 +1,24 @@
+import controller.Controller;
+import controller.ControllerImpl;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.text.FieldPosition;
+import model.Image;
+import model.ImageLoader;
 import model.ImageUtil;//demo main
+import model.ImageWriter;
+import model.PPMIMageLoader;
+import model.PPMWriter;
+import model.operations.ImageOperation;
+import model.operations.RedComponent;
+
 public class Main {
   public static void main(String[] args) {
-    //ImageUtil.readPPM("Koala.ppm");
-    Integer pixels[][] = new Integer[10][5];
-    System.out.println(pixels.length);
-    System.out.println( pixels[0].length );
+      Controller controller = new ControllerImpl(System.out,
+                                                  new InputStreamReader(System.in));
+
+      controller.go();
   }
-}    //
-/*   void method(int* array, int rows, int cols){
-          array[
-      }
-        array[2][3]
-    int array[10][5];
- */
+}

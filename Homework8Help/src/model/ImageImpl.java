@@ -17,10 +17,10 @@ public class ImageImpl implements Image {
     this.height = pixels.length;
     this.maxValue = maxValue;
 
-    this.pixels = new  Pixel[this.width][this.height];
+    this.pixels = new  Pixel[this.height][this.width];
 
-    for ( int i = 0; i < this.width; i++ ){
-      for ( int j = 0; j < this.height; j++ ){
+    for ( int i = 0; i < this.height; i++ ){
+      for ( int j = 0; j < this.width; j++ ){
         this.pixels[i][j] = pixels[i][j];
       }
     }
@@ -43,7 +43,7 @@ public class ImageImpl implements Image {
 
   @Override
   public Pixel getPixel(int x, int y) {
-    if ( x < 0 || y < 0 || x >= width || y >= height) {
+    if ( x < 0 || y < 0 || x >= height || y >= width) {
       throw new IllegalArgumentException("x=" + x + " y=" + y);
     }
     return this.pixels[x][y];
